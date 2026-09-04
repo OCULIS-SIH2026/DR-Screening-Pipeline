@@ -1,0 +1,33 @@
+# Environment Variables & Secrets
+.env
+.env.local
+
+# Project Documentation / Plans
+DR_Screening_10_Phase_Implementation_Plan.md
+
+# MATLAB autosave and backup files
+*.asv
+*.m~
+*.mlx.autosave
+
+# Simulink generated folders and cache
+slprj/
+.SimulinkCache/
+*.slxc
+
+# Compiled MEX files
+*.mex*
+
+# Temporary and local test outputs
+scratch/
+tmp/
+*.tmp
+*.log
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# IDE configuration
+.vscode/
+.idea/

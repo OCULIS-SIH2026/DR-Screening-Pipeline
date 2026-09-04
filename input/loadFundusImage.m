@@ -17,7 +17,7 @@ function sample = loadFundusImage(source, varargin)
 %   sample - Standardized pipeline struct (conforms to Phase 1 specification).
 %
 % Reference:
-%   Phase 1 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 1: Input and Data Interface
 
     % 1. Parse optional arguments
     p = inputParser;

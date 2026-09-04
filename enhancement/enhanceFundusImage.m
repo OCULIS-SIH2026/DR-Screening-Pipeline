@@ -25,7 +25,7 @@ function [outSample, enhancedImg, info] = enhanceFundusImage(inputArg, varargin)
 %   info        - Struct with enhancement parameters and execution status.
 %
 % Reference:
-%   Phase 3 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 3: Image Enhancement and Normalization
 
     p = inputParser;
     p.CaseSensitive = false;

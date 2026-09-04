@@ -5,7 +5,7 @@ function sample = createSampleStruct()
 %   sample - Struct containing placeholders and schema fields for all 10 phases.
 %
 % Reference:
-%   Phase 1 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 1: Input and Data Interface
 
     sample = struct();
     

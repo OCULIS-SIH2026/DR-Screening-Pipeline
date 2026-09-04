@@ -25,7 +25,7 @@ function [outSample, status, overallScore, detailedMetrics] = assessImageQuality
 %   Score < 0.50 OR hard fail     --> "RECAPTURE"  (unusable)
 %
 % Reference:
-%   Phase 2 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 2: Image Quality Assessment
 
     isSampleStruct = isstruct(inputArg) && isfield(inputArg, 'image');
 

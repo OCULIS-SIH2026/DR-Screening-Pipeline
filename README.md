@@ -1,6 +1,6 @@
 ## Milestone 1 — Basic Engine (Phases 1, 2, & 3)
 
-This repository implements the automated diabetic retinopathy (DR) screening pipeline according to [DR_Screening_10_Phase_Implementation_Plan.md](file:///d:/DR%20Screening%20Pipeline/DR_Screening_10_Phase_Implementation_Plan.md).
+This repository implements an automated, clinical-grade diabetic retinopathy (DR) screening pipeline in MATLAB.
 
 ### Directory Structure
 
@@ -29,9 +29,38 @@ DR Screening Pipeline/
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
 │   ├── testPhase3.m                 # Unit test suite for Phase 3
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
-├── DR_Screening_10_Phase_Implementation_Plan.md
+├── utils/
+│   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
+│   └── loadEnv.m                    # .env parser and environment injector
+├── .env.example                     # Environment template (paths, model weights, thresholds)
 └── README.md
 ```
+
+---
+
+### Configuration & Environment (`.env`)
+
+To prevent hardcoding local directory paths or model locations:
+
+1. Copy the environment template:
+   ```bash
+   cp .env.example .env
+   ```
+2. Adjust your local paths and parameters in `.env`:
+   ```ini
+   DATASET_DIR=datasets/raw
+   MODEL_PATH=model/weights/dr_screening_model.mat
+   TARGET_IMAGE_HEIGHT=224
+   TARGET_IMAGE_WIDTH=224
+   QUALITY_GOOD_THRESH=0.75
+   ```
+3. In MATLAB, all modules dynamically query configurations using `getConfig()`:
+   ```matlab
+   cfg = getConfig();
+   disp(cfg.TARGET_SIZE); % [224, 224]
+   disp(cfg.MODEL_PATH);  % 'model/weights/dr_screening_model.mat'
+   ```
+   *Note: `.env` is automatically ignored by Git so your local file paths are never committed.*
 
 ---
 

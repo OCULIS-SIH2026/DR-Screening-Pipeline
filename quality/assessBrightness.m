@@ -20,7 +20,7 @@ function [brightnessScore, metrics] = assessBrightness(img, retinaMask)
 %                       .flags (cell array of warnings)
 %
 % Reference:
-%   Phase 2 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 2: Image Quality Assessment
 
     if nargin < 2 || isempty(retinaMask)
         [~, ~, retinaMask] = assessFOV(img);

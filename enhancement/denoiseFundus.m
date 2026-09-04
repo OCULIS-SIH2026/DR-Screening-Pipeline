@@ -20,7 +20,7 @@ function denoisedImg = denoiseFundus(img, retinaMask, varargin)
 %   denoisedImg - Noise-reduced RGB fundus image (uint8).
 %
 % Reference:
-%   Phase 3 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 3: Image Enhancement and Normalization
 
     p = inputParser;
     addRequired(p, 'img');

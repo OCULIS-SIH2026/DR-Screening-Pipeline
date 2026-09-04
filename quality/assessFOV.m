@@ -16,7 +16,7 @@ function [fovScore, metrics, retinaMask] = assessFOV(img)
 %   retinaMask - Binary mask of the retinal foreground (true = retina, false = background).
 %
 % Reference:
-%   Phase 2 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 2: Image Quality Assessment
 
     if ndims(img) == 3
         % Use red and green channels to distinguish retinal tissue from black border

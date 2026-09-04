@@ -19,7 +19,7 @@ function [normImg, illumMap] = normalizeIllumination(img, retinaMask, varargin)
 %   illumMap   - Estimated 2D background illumination field.
 %
 % Reference:
-%   Phase 3 of DR_Screening_10_Phase_Implementation_Plan.md
+%   Phase 3: Image Enhancement and Normalization
 
     p = inputParser;
     addRequired(p, 'img');
