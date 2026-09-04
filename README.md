@@ -43,6 +43,10 @@ DR Screening Pipeline/
 │   ├── preprocessForModel.m         # Resizing and ImageNet tensor normalization
 │   ├── runDRModel.m                 # Master inference engine returning 5 DR class probs
 │   └── createMockDRModel.m          # Calibrated mock generator for testing without weights
+├── explainability/
+│   ├── generateGradCAM.m            # Master Grad-CAM explainability coordinator
+│   ├── computeGradCAMMap.m          # 2D gradient-weighted activation map computation
+│   └── overlayHeatmap.m             # Alpha-blending heatmap with fundus photograph
 ├── tests/
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
@@ -50,6 +54,7 @@ DR Screening Pipeline/
 │   ├── testPhase4.m                 # Unit test suite for Phase 4
 │   ├── testPhase5.m                 # Unit test suite for Phase 5
 │   ├── testPhase6.m                 # Unit test suite for Phase 6
+│   ├── testPhase7.m                 # Unit test suite for Phase 7
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── utils/
 │   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
@@ -123,13 +128,17 @@ To prevent hardcoding local directory paths or model locations:
    sample = detectLesionEvidence(sample);
 
    % 6. CNN Inference (Stage 0 to 4 Diabetic Retinopathy Classification)
-   model = loadDRModel(); % Loads weights from .env MODEL_PATH or calibrated mock
+   model  = loadDRModel(); % Loads weights from .env MODEL_PATH or calibrated mock
    sample = runDRModel(model, sample);
 
-   % Inspect model predictions
+   % 7. Explainability & Grad-CAM (Visualize why the CNN made its prediction)
+   sample = generateGradCAM(model, sample);
+
+   % Inspect model predictions and visual explanation
    disp(sample.prediction.predictedClass); % e.g. 2
    disp(sample.prediction.classLabel);     % e.g. "Moderate NPDR"
-   disp(sample.prediction.probabilities);  % [P0, P1, P2, P3, P4] summing to 1.0
+   disp(sample.gradCAM.explanation);       % Human-readable explanation text
+   imshow(sample.gradCAM.overlay);         % View Grad-CAM heatmap overlaid on retina
    ```
 
 ---
