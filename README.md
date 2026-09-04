@@ -57,7 +57,13 @@ DR Screening Pipeline/
 ├── report/
 │   ├── generateScreeningReport.m    # Multi-panel visual dashboard generator & exporter
 │   └── formatReportText.m           # Formats standardized clinical consultation notes
+├── simulink/
+│   ├── simulateScreeningWorkflow.m  # Discrete-event workflow simulation engine
+│   ├── DR_Screening_System_params.m # 100k patient/year system sizing parameters
+│   ├── analyzeSystemCapacity.m      # Capacity planning and bottleneck report generator
+│   └── buildSimulinkModel.m         # Programmatic builder for DR_Screening_System.slx
 ├── tests/
+│   ├── runAllPipelineTests.m        # Master test runner executing all 10 test suites
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
 │   ├── testPhase3.m                 # Unit test suite for Phase 3
@@ -67,6 +73,7 @@ DR Screening Pipeline/
 │   ├── testPhase7.m                 # Unit test suite for Phase 7
 │   ├── testPhase8.m                 # Unit test suite for Phase 8
 │   ├── testPhase9.m                 # Unit test suite for Phase 9
+│   ├── testPhase10.m                # Unit test suite for Phase 10
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── utils/
 │   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
@@ -110,19 +117,33 @@ To prevent hardcoding local directory paths or model locations:
    setup_environment;
    ```
 
-2. **Run All Unit Tests**:
+2. **Run All Unit Tests (Phases 1 through 10)**:
    ```matlab
-   testPhase1;
-   testPhase2;
-   testPhase3;
+   % Runs complete test harness across all 10 phases in one command
+   runAllPipelineTests;
    ```
 
-3. **Run End-to-End Milestone 1 Demo**:
+3. **Single-Command End-to-End Patient Screening**:
    ```matlab
-   demoMilestone1;
+   % Runs all 9 phases on an image and saves PNG dashboard + TXT consultation note
+   sample = screenFundusImage("path/to/retina.jpg");
+
+   % Print consultation summary text:
+   disp(sample.report.summaryText);
    ```
 
-4. **Single-Patient Pipeline Usage**:
+4. **Run System Capacity Simulation (100,000+ Patients/Year)**:
+   ```matlab
+   % Simulate 8-hour tele-screening workflow and plot queue utilization
+   params  = DR_Screening_System_params('AnnualVolume', 100000);
+   results = simulateScreeningWorkflow(params, 'SimulationHours', 8, 'Plot', true);
+
+   % Run executive capacity planning & bottleneck report
+   report = analyzeSystemCapacity('AnnualVolume', 100000);
+   disp(report.summaryText);
+   ```
+
+5. **Step-by-Step Modular Pipeline Usage**:
    ```matlab
    % 1. Ingest image (standardizes color space and target dimensions)
    sample = loadFundusImage("fundus.jpg", 'TargetSize', [224, 224]);
