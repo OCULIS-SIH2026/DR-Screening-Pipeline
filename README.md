@@ -1,4 +1,4 @@
-## Phase 1 & 2 — Input Interface & Image Quality Assessment (IQA)
+## Milestone 1 — Basic Engine (Phases 1, 2, & 3)
 
 This repository implements the automated diabetic retinopathy (DR) screening pipeline according to [DR_Screening_10_Phase_Implementation_Plan.md](file:///d:/DR%20Screening%20Pipeline/DR_Screening_10_Phase_Implementation_Plan.md).
 
@@ -7,6 +7,8 @@ This repository implements the automated diabetic retinopathy (DR) screening pip
 ```text
 DR Screening Pipeline/
 ├── setup_environment.m              # Initializes MATLAB paths for all modules
+├── main/
+│   └── demoMilestone1.m             # End-to-end demonstration of Milestone 1
 ├── input/
 │   ├── loadFundusImage.m            # Primary image loader & preprocessor
 │   ├── createSampleStruct.m         # Standardized internal struct generator
@@ -17,9 +19,15 @@ DR Screening Pipeline/
 │   ├── calculateSharpness.m         # Variance of Laplacian & Sobel gradient
 │   ├── assessBrightness.m           # Underexposure/overexposure & uniformity
 │   └── assessContrast.m             # RMS & dynamic range structural contrast
+├── enhancement/
+│   ├── enhanceFundusImage.m         # Master enhancement coordinator & gate
+│   ├── applyCLAHE.m                 # CLAHE in CIE L*a*b* color space
+│   ├── normalizeIllumination.m      # Background illumination field correction
+│   └── denoiseFundus.m              # Edge-preserving bilateral/median denoising
 ├── tests/
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
+│   ├── testPhase3.m                 # Unit test suite for Phase 3
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── DR_Screening_10_Phase_Implementation_Plan.md
 └── README.md
@@ -34,25 +42,42 @@ DR Screening Pipeline/
    setup_environment;
    ```
 
-2. **Run Unit Tests**:
+2. **Run All Unit Tests**:
    ```matlab
-   resultsP1 = testPhase1();
-   resultsP2 = testPhase2();
+   testPhase1;
+   testPhase2;
+   testPhase3;
    ```
 
-3. **End-to-End Ingestion & Quality Assessment**:
+3. **Run End-to-End Milestone 1 Demo**:
    ```matlab
-   % Ingest image
-   sample = loadFundusImage("path/to/retina.jpg", 'TargetSize', [224, 224]);
+   demoMilestone1;
+   ```
 
-   % Assess quality
+4. **Single-Patient Pipeline Usage**:
+   ```matlab
+   % 1. Ingest image (standardizes color space and target dimensions)
+   sample = loadFundusImage("fundus.jpg", 'TargetSize', [224, 224]);
+
+   % 2. Quality Assessment (GOOD, BORDERLINE, RECAPTURE)
    sample = assessImageQuality(sample);
 
-   % Inspect quality decision:
-   disp(sample.quality.status);           % "GOOD", "BORDERLINE", or "RECAPTURE"
-   disp(sample.quality.overallScore);     % e.g. 0.82
-   disp(sample.quality.rejectionReasons); % Specific reason strings if rejected
+   % 3. Selective Enhancement (runs CLAHE + Illumination Norm ONLY on BORDERLINE)
+   sample = enhanceFundusImage(sample);
+
+   % Inspect status
+   disp(sample.quality.status);
+   disp(sample.enhancementInfo.applied);
    ```
+
+---
+
+### Selective Enhancement Rules (Phase 3)
+
+In accordance with clinical protocol:
+- **`GOOD` images**: Left untouched (`applied = false`). Aggressive enhancement is avoided so artificial microaneurysms or bleeding artifacts are not hallucinated.
+- **`BORDERLINE` images**: Recoverable cases undergo illumination field normalization, CIE $L^*a^*b^*$ CLAHE, and edge-preserving bilateral denoising to boost vessel and lesion contrast.
+- **`RECAPTURE` images**: Severely blurred or blacked-out images are not processed further (`applied = false`) and require physical re-imaging.
 
 ---
 
