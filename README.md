@@ -24,10 +24,17 @@ DR Screening Pipeline/
 │   ├── applyCLAHE.m                 # CLAHE in CIE L*a*b* color space
 │   ├── normalizeIllumination.m      # Background illumination field correction
 │   └── denoiseFundus.m              # Edge-preserving bilateral/median denoising
+├── anatomy/
+│   ├── analyzeRetinalStructures.m   # Master anatomical structure coordinator
+│   ├── locateOpticDisc.m            # Optic disc detection, radius & segmentation
+│   ├── segmentVessels.m             # Multi-scale morphological vessel segmentation
+│   ├── locateFovea.m                # Macular center localization & laterality
+│   └── visualizeAnatomy.m           # High-contrast clinical overlay generator
 ├── tests/
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
 │   ├── testPhase3.m                 # Unit test suite for Phase 3
+│   ├── testPhase4.m                 # Unit test suite for Phase 4
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── utils/
 │   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
@@ -94,9 +101,14 @@ To prevent hardcoding local directory paths or model locations:
    % 3. Selective Enhancement (runs CLAHE + Illumination Norm ONLY on BORDERLINE)
    sample = enhanceFundusImage(sample);
 
-   % Inspect status
-   disp(sample.quality.status);
-   disp(sample.enhancementInfo.applied);
+   % 4. Retinal Structure Analysis (Optic Disc, Vessels, Fovea & Clinical Overlay)
+   sample = analyzeRetinalStructures(sample);
+
+   % Inspect anatomical landmarks
+   disp(sample.anatomy.opticDisc.center); % [x, y]
+   disp(sample.anatomy.fovea.center);     % [x, y]
+   disp(sample.anatomy.vessels.density);  % e.g. 0.114 (11.4% vascular coverage)
+   imshow(sample.anatomy.overlay);        % View colored clinical anatomical overlay
    ```
 
 ---

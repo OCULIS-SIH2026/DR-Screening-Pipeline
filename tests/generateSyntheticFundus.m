@@ -59,6 +59,40 @@ function img = generateSyntheticFundus(H, W, varargin)
     G(foveaMask) = G(foveaMask) * 0.65;
     B(foveaMask) = B(foveaMask) * 0.65;
 
+    % 5. Add Simulated Retinal Vascular Tree (superior & inferior arcades)
+    vesselGrid = false(H, W);
+    t = linspace(0, 1, 300);
+    
+    % Arcades arching from Optic Disc around the fovea
+    % Superior temporal arcade:
+    arc1X = odX - (odX - centerX * 0.3) * t;
+    arc1Y = odY - (radius * 0.60) * sin(pi * t);
+    % Inferior temporal arcade:
+    arc2X = odX - (odX - centerX * 0.3) * t;
+    arc2Y = odY + (radius * 0.60) * sin(pi * t);
+    % Nasal branches:
+    arc3X = odX + (radius * 0.35) * t;
+    arc3Y = odY - (radius * 0.30) * sin(pi * t);
+    arc4X = odX + (radius * 0.35) * t;
+    arc4Y = odY + (radius * 0.30) * sin(pi * t);
+
+    arcades = {[arc1X; arc1Y], [arc2X; arc2Y], [arc3X; arc3Y], [arc4X; arc4Y]};
+    for a = 1:numel(arcades)
+        pts = arcades{a};
+        for ptIdx = 1:size(pts, 2)
+            px = round(pts(1, ptIdx));
+            py = round(pts(2, ptIdx));
+            if px >= 2 && px <= (W-1) && py >= 2 && py <= (H-1) && retinaMask(py, px)
+                vesselGrid(py-1:py+1, px-1:px+1) = true;
+            end
+        end
+    end
+
+    % Vessels are darker, especially in green channel (strong absorption)
+    R(vesselGrid) = R(vesselGrid) * 0.45;
+    G(vesselGrid) = G(vesselGrid) * 0.30;
+    B(vesselGrid) = B(vesselGrid) * 0.35;
+
     % 5. Clip and cast to uint8
     R = uint8(max(0, min(255, R)));
     G = uint8(max(0, min(255, G)));
