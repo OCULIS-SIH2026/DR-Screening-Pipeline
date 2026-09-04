@@ -47,6 +47,12 @@ DR Screening Pipeline/
 │   ├── generateGradCAM.m            # Master Grad-CAM explainability coordinator
 │   ├── computeGradCAMMap.m          # 2D gradient-weighted activation map computation
 │   └── overlayHeatmap.m             # Alpha-blending heatmap with fundus photograph
+├── decision/
+│   ├── makeClinicalDecision.m       # Master decision engine coordinator
+│   ├── determineReferral.m          # Referable/Non-referable clinical triage logic
+│   ├── calibrateConfidence.m        # Temperature scaling & predictive entropy calculation
+│   ├── applyClinicalGate.m          # Uncertainty detection & model-evidence contradiction audit
+│   └── evaluateClinicalMetrics.m    # Sensitivity (>90%), Specificity (>85%), confusion matrices
 ├── tests/
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
@@ -55,6 +61,7 @@ DR Screening Pipeline/
 │   ├── testPhase5.m                 # Unit test suite for Phase 5
 │   ├── testPhase6.m                 # Unit test suite for Phase 6
 │   ├── testPhase7.m                 # Unit test suite for Phase 7
+│   ├── testPhase8.m                 # Unit test suite for Phase 8
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── utils/
 │   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
@@ -134,11 +141,15 @@ To prevent hardcoding local directory paths or model locations:
    % 7. Explainability & Grad-CAM (Visualize why the CNN made its prediction)
    sample = generateGradCAM(model, sample);
 
-   % Inspect model predictions and visual explanation
-   disp(sample.prediction.predictedClass); % e.g. 2
-   disp(sample.prediction.classLabel);     % e.g. "Moderate NPDR"
-   disp(sample.gradCAM.explanation);       % Human-readable explanation text
-   imshow(sample.gradCAM.overlay);         % View Grad-CAM heatmap overlaid on retina
+   % 8. Clinical Decision Logic (Referral Triage, Probability Calibration & Safety Gate)
+   sample = makeClinicalDecision(sample);
+
+   % Inspect clinical decision & triage recommendations
+   disp(sample.decision.isReferable);          % true / false (Referable DR)
+   disp(sample.decision.referableCategory);    % "REFERABLE" or "NON_REFERABLE"
+   disp(sample.decision.confidence);           % Calibrated confidence (e.g. 0.89)
+   disp(sample.decision.actionRequired);       % "AUTOMATED_RESULT_ACCEPTED" / "HUMAN_OPHTHALMOLOGIST_REVIEW"
+   disp(sample.decision.recommendedTimeframe); % e.g. "Within 8 to 12 weeks"
    ```
 
 ---
