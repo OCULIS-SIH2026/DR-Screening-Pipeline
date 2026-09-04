@@ -21,6 +21,7 @@ slprj/
 # Temporary and local test outputs
 scratch/
 tmp/
+reports/
 *.tmp
 *.log
 

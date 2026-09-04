@@ -8,6 +8,7 @@ This repository implements an automated, clinical-grade diabetic retinopathy (DR
 DR Screening Pipeline/
 ├── setup_environment.m              # Initializes MATLAB paths for all modules
 ├── main/
+│   ├── screenFundusImage.m          # Single-command end-to-end master pipeline runner
 │   └── demoMilestone1.m             # End-to-end demonstration of Milestone 1
 ├── input/
 │   ├── loadFundusImage.m            # Primary image loader & preprocessor
@@ -53,6 +54,9 @@ DR Screening Pipeline/
 │   ├── calibrateConfidence.m        # Temperature scaling & predictive entropy calculation
 │   ├── applyClinicalGate.m          # Uncertainty detection & model-evidence contradiction audit
 │   └── evaluateClinicalMetrics.m    # Sensitivity (>90%), Specificity (>85%), confusion matrices
+├── report/
+│   ├── generateScreeningReport.m    # Multi-panel visual dashboard generator & exporter
+│   └── formatReportText.m           # Formats standardized clinical consultation notes
 ├── tests/
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
@@ -62,6 +66,7 @@ DR Screening Pipeline/
 │   ├── testPhase6.m                 # Unit test suite for Phase 6
 │   ├── testPhase7.m                 # Unit test suite for Phase 7
 │   ├── testPhase8.m                 # Unit test suite for Phase 8
+│   ├── testPhase9.m                 # Unit test suite for Phase 9
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── utils/
 │   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
@@ -144,12 +149,17 @@ To prevent hardcoding local directory paths or model locations:
    % 8. Clinical Decision Logic (Referral Triage, Probability Calibration & Safety Gate)
    sample = makeClinicalDecision(sample);
 
-   % Inspect clinical decision & triage recommendations
-   disp(sample.decision.isReferable);          % true / false (Referable DR)
-   disp(sample.decision.referableCategory);    % "REFERABLE" or "NON_REFERABLE"
-   disp(sample.decision.confidence);           % Calibrated confidence (e.g. 0.89)
-   disp(sample.decision.actionRequired);       % "AUTOMATED_RESULT_ACCEPTED" / "HUMAN_OPHTHALMOLOGIST_REVIEW"
-   disp(sample.decision.recommendedTimeframe); % e.g. "Within 8 to 12 weeks"
+   % 9. Automated Screening Report & Visual 6-Panel Dashboard
+   sample = generateScreeningReport(sample, 'SaveDir', 'reports', 'ExportPNG', true);
+
+   % Print consultation text:
+   disp(sample.report.summaryText);
+   ```
+
+5. **Single-Command End-to-End Execution**:
+   ```matlab
+   % Runs all 9 phases in one command and saves PNG + TXT reports
+   sample = screenFundusImage("path/to/retina.jpg");
    ```
 
 ---
