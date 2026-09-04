@@ -37,12 +37,19 @@ DR Screening Pipeline/
 │   ├── detectExudates.m             # Bright lipid plaque detection with OD masking
 │   ├── detectNeovascularization.m   # Proliferative abnormal vessel growth screener
 │   └── visualizeLesions.m           # Multi-color clinical lesion candidate overlay
+├── model/
+│   ├── getModelContract.m           # CNN input/output specification contract
+│   ├── loadDRModel.m                # Model loader (.mat, .onnx, or calibrated mock)
+│   ├── preprocessForModel.m         # Resizing and ImageNet tensor normalization
+│   ├── runDRModel.m                 # Master inference engine returning 5 DR class probs
+│   └── createMockDRModel.m          # Calibrated mock generator for testing without weights
 ├── tests/
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
 │   ├── testPhase3.m                 # Unit test suite for Phase 3
 │   ├── testPhase4.m                 # Unit test suite for Phase 4
 │   ├── testPhase5.m                 # Unit test suite for Phase 5
+│   ├── testPhase6.m                 # Unit test suite for Phase 6
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── utils/
 │   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
@@ -115,12 +122,14 @@ To prevent hardcoding local directory paths or model locations:
    % 5. Lesion Evidence Extraction (Microaneurysms, Hemorrhages, Exudates, NV)
    sample = detectLesionEvidence(sample);
 
-   % Inspect detected lesion candidates
-   disp(sample.lesionEvidence.microaneurysms.count); % Microaneurysm count
-   disp(sample.lesionEvidence.hemorrhages.count);    % Hemorrhage count
-   disp(sample.lesionEvidence.exudates.count);       % Exudate count
-   disp(sample.lesionEvidence.neovascularization.detected); % true/false
-   imshow(sample.lesionEvidence.overlay);            % View colored lesion candidate overlay
+   % 6. CNN Inference (Stage 0 to 4 Diabetic Retinopathy Classification)
+   model = loadDRModel(); % Loads weights from .env MODEL_PATH or calibrated mock
+   sample = runDRModel(model, sample);
+
+   % Inspect model predictions
+   disp(sample.prediction.predictedClass); % e.g. 2
+   disp(sample.prediction.classLabel);     % e.g. "Moderate NPDR"
+   disp(sample.prediction.probabilities);  % [P0, P1, P2, P3, P4] summing to 1.0
    ```
 
 ---
