@@ -30,11 +30,19 @@ DR Screening Pipeline/
 │   ├── segmentVessels.m             # Multi-scale morphological vessel segmentation
 │   ├── locateFovea.m                # Macular center localization & laterality
 │   └── visualizeAnatomy.m           # High-contrast clinical overlay generator
+├── lesions/
+│   ├── detectLesionEvidence.m       # Master lesion evidence extraction coordinator
+│   ├── detectMicroaneurysms.m       # Focal dark capillary outpouching detection
+│   ├── detectHemorrhages.m          # Dot-blot & flame hemorrhage detection
+│   ├── detectExudates.m             # Bright lipid plaque detection with OD masking
+│   ├── detectNeovascularization.m   # Proliferative abnormal vessel growth screener
+│   └── visualizeLesions.m           # Multi-color clinical lesion candidate overlay
 ├── tests/
 │   ├── testPhase1.m                 # Unit test suite for Phase 1
 │   ├── testPhase2.m                 # Unit test suite for Phase 2
 │   ├── testPhase3.m                 # Unit test suite for Phase 3
 │   ├── testPhase4.m                 # Unit test suite for Phase 4
+│   ├── testPhase5.m                 # Unit test suite for Phase 5
 │   └── generateSyntheticFundus.m    # Realistic synthetic fundus test generator
 ├── utils/
 │   ├── getConfig.m                  # Dynamic configuration provider (no hardcoded paths)
@@ -104,11 +112,15 @@ To prevent hardcoding local directory paths or model locations:
    % 4. Retinal Structure Analysis (Optic Disc, Vessels, Fovea & Clinical Overlay)
    sample = analyzeRetinalStructures(sample);
 
-   % Inspect anatomical landmarks
-   disp(sample.anatomy.opticDisc.center); % [x, y]
-   disp(sample.anatomy.fovea.center);     % [x, y]
-   disp(sample.anatomy.vessels.density);  % e.g. 0.114 (11.4% vascular coverage)
-   imshow(sample.anatomy.overlay);        % View colored clinical anatomical overlay
+   % 5. Lesion Evidence Extraction (Microaneurysms, Hemorrhages, Exudates, NV)
+   sample = detectLesionEvidence(sample);
+
+   % Inspect detected lesion candidates
+   disp(sample.lesionEvidence.microaneurysms.count); % Microaneurysm count
+   disp(sample.lesionEvidence.hemorrhages.count);    % Hemorrhage count
+   disp(sample.lesionEvidence.exudates.count);       % Exudate count
+   disp(sample.lesionEvidence.neovascularization.detected); % true/false
+   imshow(sample.lesionEvidence.overlay);            % View colored lesion candidate overlay
    ```
 
 ---

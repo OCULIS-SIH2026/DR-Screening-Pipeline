@@ -14,10 +14,12 @@ function img = generateSyntheticFundus(H, W, varargin)
     addRequired(p, 'W', @isnumeric);
     addParameter(p, 'Quality', 'good', @ischar);
     addParameter(p, 'ColorSpace', 'rgb', @ischar);
+    addParameter(p, 'Lesions', 'none', @ischar);
     parse(p, H, W, varargin{:});
 
     quality = lower(p.Results.Quality);
     colorSpace = lower(p.Results.ColorSpace);
+    lesionMode = lower(p.Results.Lesions);
 
     % 1. Create retinal circular mask
     [X, Y] = meshgrid(1:W, 1:H);
@@ -93,7 +95,53 @@ function img = generateSyntheticFundus(H, W, varargin)
     G(vesselGrid) = G(vesselGrid) * 0.30;
     B(vesselGrid) = B(vesselGrid) * 0.35;
 
-    % 5. Clip and cast to uint8
+    % 6. Add Lesions if requested
+    if ~strcmpi(lesionMode, 'none')
+        % Microaneurysms: small dark red dots
+        maLocations = [centerX - 60, centerY - 50; ...
+                       centerX - 40, centerY + 60; ...
+                       centerX + 20, centerY - 70; ...
+                       centerX - 90, centerY + 20];
+        for m = 1:size(maLocations, 1)
+            mx = maLocations(m, 1);
+            my = maLocations(m, 2);
+            dotDist = sqrt((X - mx).^2 + (Y - my).^2);
+            dotMask = dotDist <= 2.5 & retinaMask;
+            R(dotMask) = 70;
+            G(dotMask) = 15;
+            B(dotMask) = 15;
+        end
+
+        if strcmpi(lesionMode, 'moderate') || strcmpi(lesionMode, 'severe')
+            % Hemorrhages: larger dark red blot patches
+            haLocations = [centerX - 80, centerY - 80; ...
+                           centerX - 20, centerY + 90];
+            for h = 1:size(haLocations, 1)
+                hx = haLocations(h, 1);
+                hy = haLocations(h, 2);
+                blotDist = sqrt((X - hx).^2 + (Y - hy).^2);
+                blotMask = blotDist <= 8.0 & retinaMask;
+                R(blotMask) = 85;
+                G(blotMask) = 18;
+                B(blotMask) = 18;
+            end
+
+            % Exudates: bright yellow lipid plaques (away from OD!)
+            exLocations = [centerX - 100, centerY - 30; ...
+                           centerX - 70,  centerY + 40];
+            for e = 1:size(exLocations, 1)
+                ex = exLocations(e, 1);
+                ey = exLocations(e, 2);
+                exDist = sqrt((X - ex).^2 + (Y - ey).^2);
+                exMask = exDist <= 6.0 & retinaMask;
+                R(exMask) = 245;
+                G(exMask) = 235;
+                B(exMask) = 140;
+            end
+        end
+    end
+
+    % 7. Clip and cast to uint8
     R = uint8(max(0, min(255, R)));
     G = uint8(max(0, min(255, G)));
     B = uint8(max(0, min(255, B)));
