@@ -1,0 +1,12 @@
+# OCULIS DR Screening Pipeline - Backend Requirements
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+python-multipart>=0.0.6
+pillow>=9.5.0
+pydantic>=2.0.0
+
+# Numerical & ML Dependencies (Optional if running mock, required for live EfficientNet-B0 + Grad-CAM)
+numpy>=1.24.0
+opencv-python>=4.7.0
+torch>=2.0.0
+torchvision>=0.15.0

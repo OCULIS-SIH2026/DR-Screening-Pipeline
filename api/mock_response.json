@@ -1,0 +1,47 @@
+{
+  "status": "success",
+  "patient_id": "PT-2026-MOCK-042",
+  "processing_time_ms": 118.4,
+  "quality": {
+    "status": "Pass",
+    "overall_score": 0.885,
+    "metrics": {
+      "sharpness": 0.875,
+      "brightness": 0.912,
+      "contrast": 0.868,
+      "fov_valid": true
+    },
+    "rejection_reasons": [],
+    "is_acceptable": true
+  },
+  "prediction": {
+    "stage": 2,
+    "label": "Moderate NPDR",
+    "description": "Moderate non-proliferative retinopathy: microaneurysms, hemorrhages, and hard exudates present.",
+    "confidence": 0.768,
+    "probabilities": {
+      "No DR": 0.021,
+      "Mild NPDR": 0.065,
+      "Moderate NPDR": 0.768,
+      "Severe NPDR": 0.114,
+      "Proliferative DR": 0.032
+    }
+  },
+  "triage": {
+    "is_referable": true,
+    "referral_category": "Referable Diabetic Retinopathy",
+    "urgency": "Routine Ophthalmology",
+    "timeframe": "Schedule consultation within 4 to 6 weeks",
+    "recommendation": "Moderate non-proliferative retinopathy identified (Referable DR). Refer to ophthalmologist for comprehensive dilated retinal evaluation.",
+    "confidence_score": 0.768
+  },
+  "enhancement": {
+    "applied": true,
+    "method": "Selective CLAHE (L-channel adaptive equalization)"
+  },
+  "visuals": {
+    "original_image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAB4AHgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDCooorwT7MKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKckbyHCKW+gq5b2Bb5pgQOy9z9a0FUKMKAB6AVnKaWxSjczU06VsFyqjv3Ip/wDZn/Tb/wAd/wDr1oUVHPIrlRmvp0g+46tx34NVZIZIvvoR79q3KCAQQRkHqKaqPqDijAorQubDOXhHOeV7fhWeQQSCMEdRWiknsQ1YKKKKoQUUUUAFFFFABV6wt9xEzdAflGOp9apxoZJFQfxHHStxVCqFAwAMCs5ysrFRQtFFFYmgUUUUAFFFFABVG/t9wMy9QPmGOo9avUU07O4mrmBRUtzF5M7IPu9R9KiroTuZBRRRTAKKKKALmnJunLkcKOvof85rTrP0z/lr+H9a0Kwn8RpHYKKKKgoKKKKACiiigAooooAz9ST7kgH+yT/L+tUK09R/491/3x/I1mVvDYyluFFFFWIKKKKALunPiVk4+YZ/EVpVhwyeVMj+h5+lbgIIBByD0NY1Frc0i9AooorMoKKKKACiiigAooooAoak/wAqJxycn1/z1rPqe7l824Yg5UcCoK6IqyMm7sKKKKoQUUUUAFaFhc5Ahckn+E+3pWfQCQQQcEdDUyV1Yadjfoqjb34b5ZiAezdj9avVg01uaJ3CiiikMKKKKACql7c+UnlqSHYdR2FFzerFlY8M4OD6Csx3Z2LMcseprSEOrIlISiiitiAooooAKKKKACiiigAqWK5lh4R/l9DyKiopNXAvpqXQSR/Uqf6VJ/aMP91/yH+NZlFTyRHzM0H1IfwRk8dWPeq0t3NKCC2FPZeKgopqKQNthRRRVCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9k=",
+    "enhanced_image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAB4AHgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDCooorwT7MKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKckbyHCKW+gq5b2Bb5pgQOy9z9a0FUKMKAB6AVnKaWxSjczU06VsFyqjv3Ip/wDZn/Tb/wAd/wDr1oUVHPIrlRmvp0g+46tx34NVZIZIvvoR79q3KCAQQRkHqKaqPqDijAorQubDOXhHOeV7fhWeQQSCMEdRWiknsQ1YKKKKoQUUUUAFFFFABV6wt9xEzdAflGOp9apxoZJFQfxHHStxVCqFAwAMCs5ysrFRQtFFFYmgUUUUAFFFFABVG/t9wMy9QPmGOo9avUU07O4mrmBRUtzF5M7IPu9R9KiroTuZBRRRTAKKKKALmnJunLkcKOvof85rTrP0z/lr+H9a0Kwn8RpHYKKKKgoKKKKACiiigAooooAz9ST7kgH+yT/L+tUK09R/491/3x/I1mVvDYyluFFFFWIKKKKALunPiVk4+YZ/EVpVhwyeVMj+h5+lbgIIBByD0NY1Frc0i9AooorMoKKKKACiiigAooooAoak/wAqJxycn1/z1rPqe7l824Yg5UcCoK6IqyMm7sKKKKoQUUUUAFaFhc5Ahckn+E+3pWfQCQQQcEdDUyV1Yadjfoqjb34b5ZiAezdj9avVg01uaJ3CiiikMKKKKACql7c+UnlqSHYdR2FFzerFlY8M4OD6Csx3Z2LMcseprSEOrIlISiiitiAooooAKKKKACiiigAqWK5lh4R/l9DyKiopNXAvpqXQSR/Uqf6VJ/aMP91/yH+NZlFTyRHzM0H1IfwRk8dWPeq0t3NKCC2FPZeKgopqKQNthRRRVCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9k=",
+    "gradcam_overlay": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAB4AHgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDCooorwT7MKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKckbyHCKW+gq5b2Bb5pgQOy9z9a0FUKMKAB6AVnKaWxSjczU06VsFyqjv3Ip/wDZn/Tb/wAd/wDr1oUVHPIrlRmvp0g+46tx34NVZIZIvvoR79q3KCAQQRkHqKaqPqDijAorQubDOXhHOeV7fhWeQQSCMEdRWiknsQ1YKKKKoQUUUUAFFFFABV6wt9xEzdAflGOp9apxoZJFQfxHHStxVCqFAwAMCs5ysrFRQtFFFYmgUUUUAFFFFABVG/t9wMy9QPmGOo9avUU07O4mrmBRUtzF5M7IPu9R9KiroTuZBRRRTAKKKKALmnJunLkcKOvof85rTrP0z/lr+H9a0Kwn8RpHYKKKKgoKKKKACiiigAooooAz9ST7kgH+yT/L+tUK09R/491/3x/I1mVvDYyluFFFFWIKKKKALunPiVk4+YZ/EVpVhwyeVMj+h5+lbgIIBByD0NY1Frc0i9AooorMoKKKKACiiigAooooAoak/wAqJxycn1/z1rPqe7l824Yg5UcCoK6IqyMm7sKKKKoQUUUUAFaFhc5Ahckn+E+3pWfQCQQQcEdDUyV1Yadjfoqjb34b5ZiAezdj9avVg01uaJ3CiiikMKKKKACql7c+UnlqSHYdR2FFzerFlY8M4OD6Csx3Z2LMcseprSEOrIlISiiitiAooooAKKKKACiiigAqWK5lh4R/l9DyKiopNXAvpqXQSR/Uqf6VJ/aMP91/yH+NZlFTyRHzM0H1IfwRk8dWPeq0t3NKCC2FPZeKgopqKQNthRRRVCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9k="
+  }
+}
